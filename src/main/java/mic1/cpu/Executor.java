@@ -10,6 +10,14 @@ import java.util.List;
 
 public class Executor {
 
+    private final int a;
+    private final int b;
+
+    public Executor(int a, int b) {
+        this.a = a;
+        this.b = b;
+    }
+
     public List<ExecutionState> run(List<ProgramLine> program) {
         Registers            registers = new Registers();
         List<ExecutionState> log       = new ArrayList<>();
@@ -18,11 +26,11 @@ public class Executor {
             registers.setIR(line.bits());
             int pc = registers.getPC();
 
-            Instruction instr  = new Instruction(line.bits());
-            ALUResult   result = ALU.execute(instr, line.a(), line.b());
+            Instruction instr  = new Instruction(registers.getIR());
+            ALUResult   result = ALU.execute(instr, a, b);
 
             log.add(new ExecutionState(
-                line.bits(), pc, line.a(), line.b(),
+                registers.getIR(), pc, a, b,
                 result.s, result.carryOut
             ));
 

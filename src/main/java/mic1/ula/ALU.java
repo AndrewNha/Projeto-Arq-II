@@ -21,6 +21,10 @@ public class ALU {
     }
 
     public static ALUResult execute(Instruction instr, int a, int b, int carryIn) {
+        if (instr == null) throw new IllegalArgumentException("Instrucao nao pode ser null.");
+        if (a < 0 || a > 1) throw new IllegalArgumentException("A deve ser 0 ou 1, recebido: " + a);
+        if (b < 0 || b > 1) throw new IllegalArgumentException("B deve ser 0 ou 1, recebido: " + b);
+        if (carryIn < 0 || carryIn > 1) throw new IllegalArgumentException("carryIn deve ser 0 ou 1, recebido: " + carryIn);
         int aEff = (instr.ena  == 1) ? a : 0;
         if (instr.inva == 1) aEff = aEff ^ 1;
         int bEff = (instr.enb  == 1) ? b : 0;

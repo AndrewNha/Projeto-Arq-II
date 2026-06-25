@@ -8,7 +8,7 @@ import java.util.List;
 
 public class ProgramReader {
 
-    public record ProgramLine(String bits, int a, int b) {}
+    public record ProgramLine(String bits) {}
 
     public static List<ProgramLine> read(String filePath) throws IOException {
         List<ProgramLine> lines = new ArrayList<>();
@@ -24,36 +24,16 @@ public class ProgramReader {
                     continue;
                 }
 
-                String[] parts = trimmed.split("\\s+");
-                String instrBits = parts[0];
-
-                if (instrBits.length() != 6 || !instrBits.matches("[01]{6}")) {
+                if (trimmed.length() != 6 || !trimmed.matches("[01]{6}")) {
                     throw new IllegalArgumentException(
-                        "Linha " + lineNumber + ": instrucao invalida '" + instrBits + "'");
+                        "Linha " + lineNumber + ": instrucao invalida '" + trimmed + "'");
                 }
 
-                int a = (parts.length > 1) ? parseValue(parts[1], lineNumber) : 0;
-                int b = (parts.length > 2) ? parseValue(parts[2], lineNumber) : 0;
-
-                if (a < 0 || a > 1 || b < 0 || b > 1) {
-                    throw new IllegalArgumentException(
-                        "Linha " + lineNumber + ": A e B devem ser bits (0 ou 1)");
-                }
-
-                lines.add(new ProgramLine(instrBits, a, b));
+                lines.add(new ProgramLine(trimmed));
                 lineNumber++;
             }
         }
 
         return lines;
-    }
-
-    private static int parseValue(String token, int lineNumber) {
-        try {
-            return Integer.parseInt(token);
-        } catch (NumberFormatException e) {
-            throw new IllegalArgumentException(
-                "Linha " + lineNumber + ": valor nao numerico '" + token + "'");
-        }
     }
 }
