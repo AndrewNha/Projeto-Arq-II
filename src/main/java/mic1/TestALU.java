@@ -10,7 +10,7 @@ public class TestALU {
     private static int failed = 0;
 
     public static void main(String[] args) {
-        testExemploPDF();
+        testExemplo();
         testTabelaVerdadeSoma();
         testIncComF0Zero();
         testEnaEnbZero();
@@ -29,8 +29,8 @@ public class TestALU {
     }
 
     // ------------------------------------------------------------------
-    static void testExemploPDF() {
-        System.out.println("--- Exemplo do PDF ---");
+    static void testExemplo() {
+        System.out.println("--- Exemplo da Professora ---");
         // F0=1,F1=1,ENA=1,ENB=1,INVA=0,INC=0: S = A XOR B, Vai-um = carry
         check("A=1,B=1 → S=0,Vai=1", "111100", 1, 1, 0, 1);
     }
